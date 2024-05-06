@@ -12,7 +12,7 @@ export default NuxtAuthHandler({
                 email: {},
                 password: {}
             },
-            async authorize(credentials, req) {
+            async authorize(credentials: any) {
 
                 const prisma = new PrismaClient()
 
@@ -25,8 +25,9 @@ export default NuxtAuthHandler({
 
                 if (credentials?.password === response?.password) {
                     return {
-                        id: response?.id,
-                        email: response?.email,
+                        id: response!.id,
+                        email: response!.email,
+                        role: response!.role
                     }
 
                 }
@@ -36,21 +37,26 @@ export default NuxtAuthHandler({
             }
         })],
     callbacks: {
-        async session({ session, token, user }) {
-            session.user = {
-                email: token.email,
-            }
 
-            return session
-        },
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id
+                token.email = user.email
+                token.role = user.role
             }
 
 
             return token
-        }
+        },
+        async session({ session, token, user }) {
+            session.user = {
+                id: token.id as number,
+                email: token.email!,
+                role: token.role as string
+            }
 
+            return session
+        },
     }
 })
+
