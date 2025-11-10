@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.13.0",
-    "@sidebase/nuxt-auth": "^0.7.2",
+    "@sidebase/nuxt-auth": "^0.10.0",
     "nuxt": "^3.11.1",
     "prisma": "^5.13.0",
     "vue": "^3.4.21",

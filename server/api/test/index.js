@@ -1,7 +1,11 @@
+import { PrismaClient } from "@prisma/client";
+
 export default defineEventHandler(async (event) => {
-    const body = await readBody(event)
-    console.log(body.man);
-    return {
-        hello: 'world'
-    }
+    const prisma = new PrismaClient()
+    const slides = await prisma.МодельТоваров.findMany({
+        take: 6
+    })
+    return slides
+
+
 })
